@@ -1,0 +1,25 @@
+R Code: 
+
+  fb_data <- read.csv("facebook data.csv") 
+  fb_data <- read.csv("facebook data.csv", sep = ";")
+  library(tidyverse) 
+  library(dplyr)
+  str(fb_data)
+  fb_data$Type <- as.factor(fb_data$Type)
+  fb_data$Post.Weekday <- as.factor(fb_data$Post.Weekday)
+  str(fb_data) 
+  fb_data$Lifetime.Post.Total.Impressions <- log(fb_data$Lifetime.Post.Total.Impressions)
+  fb_data$Page.total.likes <- log(fb_data$Page.total.likes)
+  View(fb_data)
+  fb_data1 <- fb_data %>%  
+    select(Lifetime.Post.Total.Impressions, 
+           Page.total.likes, 
+           Type, 
+           Post.Weekday,
+           Paid, 
+           comment,
+           like,
+           share)
+  model <- lm(Lifetime.Post.Total.Impressions ~ ., 
+              data = fb_data1)
+  summary(model)
